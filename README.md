@@ -1,11 +1,6 @@
+#### 只为了解决测试环境与生产环境配置不一致，同时为了方便搭建测试环境
 # dockerapi
-- agent 实现docker的管理，信息收集
-- api 对外提供服务
-
-```
-graph TD
-  A[Web]--> B{api}
-  B --> |one| C[agent]
-  B --> |two| D[agent]
-  B --> |three| E[agent]
-```
+- [ ]  agent 实现docker的管理，信息收集
+  - [x]  容器的创建、删除、停止、启动
+  - [ ] image的相关操作
+- [ ]  api 对外提供服务
