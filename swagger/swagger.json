@@ -56,6 +56,22 @@
                     }
                 }
             }
+        },
+        "/reg/get4web": {
+            "get": {
+                "tags": [
+                    "reg"
+                ],
+                "description": "get all agent which dockerstatus is y",
+                "operationId": "AgentInfoController.Get4Web",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.AgentInfo"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -70,6 +86,9 @@
                 "AverMem": {
                     "type": "integer",
                     "format": "int64"
+                },
+                "DockerStatus": {
+                    "type": "string"
                 },
                 "IP": {
                     "type": "string"

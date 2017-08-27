@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/astaxie/beego/httplib"
+	//"github.com/astaxie/beego/httplib"
 )
 
 var (
@@ -10,10 +10,12 @@ var (
 	stop = "/v1/stop"
 	start = "/v1/start"
 	get = "/v1/get"
+	getport = "v1/getport"
 
 )
-
+/*
 func Create(ip,port string) {
 	url := "http://" + ip + ":/" + port + create
 	req := httplib.Get(url)
 }
+*/

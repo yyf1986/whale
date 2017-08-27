@@ -32,7 +32,17 @@ func (u *AgentInfoController) Post() {
 // @Success 200 {object} models.AgentInfo
 // @router / [get]
 func (u *AgentInfoController) GetAll() {
-	users := models.GetInfo()
-	u.Data["json"] = users
+	agentinfos := models.GetInfo()
+	u.Data["json"] = agentinfos
+	u.ServeJSON()
+}
+
+// @Title Get4Web
+// @Description get all agent which dockerstatus is y
+// @Success 200 {object} models.AgentInfo
+// @router /get4web [get]
+func (u *AgentInfoController) Get4Web() {
+	agentinfos := models.GetInfo4Web()
+	u.Data["json"] = agentinfos
 	u.ServeJSON()
 }

@@ -51,6 +51,18 @@ func SetInfo(aa AgentInfo) {
 func GetInfo() []*AgentInfo{
 	return AgentPool
 }
+
+func GetInfo4Web() []*AgentInfo{
+	var webagentinfos []*AgentInfo
+	l.Lock()
+	for _, ap := range AgentPool {
+		if ap.DockerStatus == "Y" {
+			webagentinfos = append(webagentinfos, ap)
+		}
+	}
+	l.Unlock()
+	return webagentinfos
+}
 //检查端口
 func checkPort(ip string, port int) bool{
 	tcpAddr := net.TCPAddr{

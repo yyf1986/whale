@@ -23,4 +23,12 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["whale/controllers:AgentInfoController"] = append(beego.GlobalControllerRouter["whale/controllers:AgentInfoController"],
+		beego.ControllerComments{
+			Method: "Get4Web",
+			Router: `/get4web`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 }

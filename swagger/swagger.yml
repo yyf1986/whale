@@ -38,6 +38,16 @@ paths:
           description: '{"status": 200}'
         "403":
           description: body is empty
+  /reg/get4web:
+    get:
+      tags:
+      - reg
+      description: get all agent which dockerstatus is y
+      operationId: AgentInfoController.Get4Web
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.AgentInfo'
 definitions:
   models.AgentInfo:
     title: AgentInfo
@@ -49,6 +59,8 @@ definitions:
       AverMem:
         type: integer
         format: int64
+      DockerStatus:
+        type: string
       IP:
         type: string
       Port:
