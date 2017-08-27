@@ -15,6 +15,7 @@ type AgentInfo struct {
 	TotalMem int
 	AverCpu int
 	AverMem int
+	DockerStatus string
 }
 
 var AgentPool []*AgentInfo
@@ -40,6 +41,7 @@ func SetInfo(aa AgentInfo) {
 				ai.TotalMem = aa.TotalMem
 				ai.AverCpu = aa.AverCpu
 				ai.AverMem = aa.AverMem
+				ai.DockerStatus = aa.DockerStatus
 			}
 		}
 	}
