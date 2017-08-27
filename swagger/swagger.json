@@ -20,7 +20,7 @@
                 "tags": [
                     "reg"
                 ],
-                "description": "get all Users",
+                "description": "get all agent",
                 "operationId": "AgentInfoController.GetAll",
                 "responses": {
                     "200": {

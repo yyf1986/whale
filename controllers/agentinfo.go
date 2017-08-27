@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"test/models"
+	"whale/models"
 	"encoding/json"
 	//"fmt"
 	"github.com/astaxie/beego"
@@ -28,7 +28,7 @@ func (u *AgentInfoController) Post() {
 }
 
 // @Title GetAll
-// @Description get all Users
+// @Description get all agent
 // @Success 200 {object} models.AgentInfo
 // @router / [get]
 func (u *AgentInfoController) GetAll() {

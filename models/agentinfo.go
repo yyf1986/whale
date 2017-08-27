@@ -17,7 +17,7 @@ type AgentInfo struct {
 	AverMem int
 }
 
-var AgentInfos []*AgentInfo
+var AgentPool []*AgentInfo
 
 var l sync.Mutex
 
@@ -25,15 +25,15 @@ func SetInfo(aa AgentInfo) {
 	l.Lock()
 	//time.Sleep(10 * time.Second)
 	isNew := true
-	for _, ai := range AgentInfos {                                
+	for _, ai := range AgentPool {                                
 		if ai.IP == aa.IP {
 			isNew = false
 		}
 	}
 	if isNew {
-		AgentInfos = append(AgentInfos, &aa)
+		AgentPool = append(AgentPool, &aa)
 	} else {
-		for _, ai := range AgentInfos {
+		for _, ai := range AgentPool {
 			if ai.IP == aa.IP {
 				ai.Port = aa.Port
 				ai.TotalCpu = aa.TotalCpu
@@ -47,7 +47,7 @@ func SetInfo(aa AgentInfo) {
 }
 
 func GetInfo() []*AgentInfo{
-	return AgentInfos
+	return AgentPool
 }
 //检查端口
 func checkPort(ip string, port int) bool{
@@ -67,26 +67,26 @@ func checkPort(ip string, port int) bool{
 	}
 }
 
-//端口不能访问，会把此agent从资源池中剔除
-func checkInfo() {
-	logs.Info("run check task")
+//端口不能访问，会把此agent从资源池中剔除，60s更新一次
+func updateInfo() {
+	logs.Info("update agent info")
 	l.Lock()
 	var agentinfos []*AgentInfo
-	for _, ai := range AgentInfos {
+	for _, ai := range AgentPool {
 		if checkPort(ai.IP,ai.Port) {
-			agentinfos= append(agentinfos,ai)
+			agentinfos = append(agentinfos,ai)
 		}
 	}
-	AgentInfos = agentinfos
+	AgentPool = agentinfos
 	l.Unlock()
 }
 
-func addTask4Check() {
-	f := func() error { checkInfo(); return nil }
-	tk := toolbox.NewTask("check", "*/10 * * * * *", f)
-	toolbox.AddTask("check", tk)
+func addTask4Update() {
+	f := func() error { updateInfo(); return nil }
+	tk := toolbox.NewTask("updateInfo", "0 */1 * * * *", f)
+	toolbox.AddTask("updateInfo", tk)
 }
 
 func init() {
-	addTask4Check()
+	addTask4Update()
 }
