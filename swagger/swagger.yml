@@ -1,0 +1,66 @@
+swagger: "2.0"
+info:
+  title: beego Test API
+  description: beego has a very cool tools to autogenerate documents for your API
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: astaxie@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /v1
+paths:
+  /reg/:
+    get:
+      tags:
+      - reg
+      description: get all Users
+      operationId: AgentInfoController.GetAll
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.AgentInfo'
+    post:
+      tags:
+      - reg
+      description: post agentinfo
+      operationId: AgentInfoController.post agentinfo
+      parameters:
+      - in: body
+        name: body
+        description: body for agent info
+        required: true
+        schema:
+          $ref: '#/definitions/models.AgentInfo'
+      responses:
+        "200":
+          description: '{"status": 200}'
+        "403":
+          description: body is empty
+definitions:
+  models.AgentInfo:
+    title: AgentInfo
+    type: object
+    properties:
+      AverCpu:
+        type: integer
+        format: int64
+      AverMem:
+        type: integer
+        format: int64
+      IP:
+        type: string
+      Port:
+        type: integer
+        format: int64
+      TotalCpu:
+        type: integer
+        format: int64
+      TotalMem:
+        type: integer
+        format: int64
+tags:
+- name: reg
+  description: |
+    Operations about AgentInfo
