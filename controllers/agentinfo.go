@@ -3,7 +3,6 @@ package controllers
 import (
 	"whale/models"
 	"encoding/json"
-	//"fmt"
 	"github.com/astaxie/beego"
 )
 
@@ -21,7 +20,6 @@ type AgentInfoController struct {
 func (u *AgentInfoController) Post() {
 	var agentinfo models.AgentInfo
 	json.Unmarshal(u.Ctx.Input.RequestBody, &agentinfo)
-	//fmt.Println(agentinfo)
 	models.SetInfo(agentinfo)
 	u.Data["json"] = map[string]int{"status": 200}
 	u.ServeJSON()

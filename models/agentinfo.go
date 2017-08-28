@@ -26,6 +26,7 @@ func SetInfo(aa AgentInfo) {
 	l.Lock()
 	//time.Sleep(10 * time.Second)
 	isNew := true
+	logs.Info(aa.IP + " start to reg")
 	for _, ai := range AgentPool {                                
 		if ai.IP == aa.IP {
 			isNew = false
@@ -33,6 +34,7 @@ func SetInfo(aa AgentInfo) {
 	}
 	if isNew {
 		AgentPool = append(AgentPool, &aa)
+		logs.Info(aa.IP + " reg sucess")
 	} else {
 		for _, ai := range AgentPool {
 			if ai.IP == aa.IP {
@@ -42,6 +44,7 @@ func SetInfo(aa AgentInfo) {
 				ai.AverCpu = aa.AverCpu
 				ai.AverMem = aa.AverMem
 				ai.DockerStatus = aa.DockerStatus
+				logs.Info(aa.IP + " update sucess")
 			}
 		}
 	}
@@ -100,6 +103,7 @@ func addTask4Update() {
 	tk := toolbox.NewTask("updateInfo", "0 */1 * * * *", f)
 	toolbox.AddTask("updateInfo", tk)
 }
+
 
 func init() {
 	addTask4Update()

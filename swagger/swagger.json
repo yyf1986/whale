@@ -15,6 +15,53 @@
     },
     "basePath": "/v1",
     "paths": {
+        "/container/create": {
+            "get": {
+                "tags": [
+                    "container"
+                ],
+                "description": "create container",
+                "operationId": "ContainerController.create container",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "cont_name",
+                        "description": "容器名称",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "vm_ip",
+                        "description": "宿主机地址",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "cont_image",
+                        "description": "容器的image",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "id_para",
+                        "description": "env参数",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"status\": 200}"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
         "/reg/": {
             "get": {
                 "tags": [
@@ -112,6 +159,10 @@
         {
             "name": "reg",
             "description": "Operations about AgentInfo\n"
+        },
+        {
+            "name": "container",
+            "description": "Operations about Container\n"
         }
     ]
 }

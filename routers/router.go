@@ -20,6 +20,11 @@ func init() {
 				&controllers.AgentInfoController{},
 			),
 		),
+		beego.NSNamespace("/container",
+			beego.NSInclude(
+				&controllers.ContainerController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }
