@@ -19,13 +19,13 @@ paths:
       operationId: ContainerController.create container
       parameters:
       - in: query
-        name: cont_name
-        description: 容器名称
+        name: vm_ip
+        description: 宿主机地址
         required: true
         type: string
       - in: query
-        name: vm_ip
-        description: 宿主机地址
+        name: cont_name
+        description: 容器名称
         required: true
         type: string
       - in: query
@@ -34,8 +34,74 @@ paths:
         required: true
         type: string
       - in: query
-        name: id_para
-        description: env参数
+        name: env
+        description: env参数，多个以逗号分隔
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"status": 200}'
+        "403":
+          description: body is empty
+  /container/del:
+    get:
+      tags:
+      - container
+      description: delete container
+      operationId: ContainerController.delete container
+      parameters:
+      - in: query
+        name: vm_ip
+        description: 宿主机地址
+        required: true
+        type: string
+      - in: query
+        name: cont_name
+        description: 容器名称
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"status": 200}'
+        "403":
+          description: body is empty
+  /container/start:
+    get:
+      tags:
+      - container
+      description: start container
+      operationId: ContainerController.start container
+      parameters:
+      - in: query
+        name: vm_ip
+        description: 宿主机地址
+        required: true
+        type: string
+      - in: query
+        name: cont_name
+        description: 容器名称
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"status": 200}'
+        "403":
+          description: body is empty
+  /container/stop:
+    get:
+      tags:
+      - container
+      description: stop container
+      operationId: ContainerController.stop container
+      parameters:
+      - in: query
+        name: vm_ip
+        description: 宿主机地址
+        required: true
+        type: string
+      - in: query
+        name: cont_name
+        description: 容器名称
         required: true
         type: string
       responses:

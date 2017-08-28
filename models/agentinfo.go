@@ -86,16 +86,30 @@ func checkPort(ip string, port int) bool{
 
 //端口不能访问，会把此agent从资源池中剔除，60s更新一次
 func updateInfo() {
-	logs.Info("update agent info")
+	logs.Info("start to update agent info")
 	l.Lock()
+	isok := true
 	var agentinfos []*AgentInfo
 	for _, ai := range AgentPool {
-		if checkPort(ai.IP,ai.Port) {
-			agentinfos = append(agentinfos,ai)
+		if ! checkPort(ai.IP,ai.Port) {
+			isok = false
+			break
 		}
 	}
-	AgentPool = agentinfos
-	l.Unlock()
+	if ! isok {
+		for _, ai := range AgentPool {
+			if checkPort(ai.IP,ai.Port) {
+				agentinfos = append(agentinfos,ai)
+			}
+		}
+		AgentPool = agentinfos
+		logs.Info("end to update agent info")
+		l.Unlock()
+	} else {
+		logs.Info("agent info do not need to update")
+		l.Unlock()
+	}
+	
 }
 
 func addTask4Update() {

@@ -13,7 +13,7 @@ var (
 	stop    = "/v1/container/stop"
 	start   = "/v1/container/start"
 	get     = "/v1/container/getall"
-	getport = "v1/getport"
+	getport = "/v1/getport"
 )
 
 func Create(ip ,container_name,image_name, env string) string {
@@ -29,6 +29,54 @@ func Create(ip ,container_name,image_name, env string) string {
 	req.Param("container_name", container_name)
 	req.Param("image_name", image_name)
 	req.Param("env", env)
+	str, _ := req.String()
+	logs.Info(str)
+	return str
+}
+
+func Del(ip ,container_name string) string {
+	var port int
+	for _, ai := range AgentPool{
+		if ai.IP == ip {
+			port = ai.Port
+		}
+	}
+	url := "http://" + ip + ":" + strconv.Itoa(port) + del
+	fmt.Println(url)
+	req := httplib.Get(url)
+	req.Param("container_name", container_name)
+	str, _ := req.String()
+	logs.Info(str)
+	return str
+}
+
+func Start(ip ,container_name string) string {
+	var port int
+	for _, ai := range AgentPool{
+		if ai.IP == ip {
+			port = ai.Port
+		}
+	}
+	url := "http://" + ip + ":" + strconv.Itoa(port) + start
+	fmt.Println(url)
+	req := httplib.Get(url)
+	req.Param("container_name", container_name)
+	str, _ := req.String()
+	logs.Info(str)
+	return str
+}
+
+func Stop(ip ,container_name string) string {
+	var port int
+	for _, ai := range AgentPool{
+		if ai.IP == ip {
+			port = ai.Port
+		}
+	}
+	url := "http://" + ip + ":" + strconv.Itoa(port) + stop
+	fmt.Println(url)
+	req := httplib.Get(url)
+	req.Param("container_name", container_name)
 	str, _ := req.String()
 	logs.Info(str)
 	return str
