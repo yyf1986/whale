@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
@@ -12,71 +13,139 @@ var (
 	del    = "/v1/container/del"
 	stop   = "/v1/container/stop"
 	start  = "/v1/container/start"
-	get    = "/v1/container/getall"
+	getall = "/v1/container/getall"
 )
 
-func Create(ip, container_name, image_name, env string) string {
-	var port int
-	for _, ai := range AgentPool {
-		if ai.IP == ip {
-			port = ai.Port
-		}
-	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + create
-	fmt.Println(url)
-	req := httplib.Get(url)
-	req.Param("container_name", container_name)
-	req.Param("image_name", image_name)
-	req.Param("env", env)
-	str, _ := req.String()
-	logs.Info(str)
-	return str
+type Resp struct {
+	Status  int    `json:"status"`
+	Errinfo string `json:"errinfo"`
 }
 
-func Del(ip, container_name string) string {
+func genResp(abc string) Resp {
+	var resp Resp
+	if err := json.Unmarshal([]byte(abc), &resp); err != nil {
+		fmt.Println(err.Error())
+	}
+	//fmt.Println(resp)
+	return resp
+}
+func Create(ip, container_name, image_name, env string) Resp {
 	var port int
 	for _, ai := range AgentPool {
 		if ai.IP == ip {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + del
-	fmt.Println(url)
-	req := httplib.Get(url)
-	req.Param("container_name", container_name)
-	str, _ := req.String()
-	logs.Info(str)
-	return str
+	if port != 0 {
+		url := "http://" + ip + ":" + strconv.Itoa(port) + create
+		fmt.Println(url)
+		req := httplib.Get(url)
+		req.Param("container_name", container_name)
+		req.Param("image_name", image_name)
+		req.Param("env", env)
+		str, _ := req.String()
+		logs.Info(str)
+		return genResp(str)
+	} else {
+		return Resp{404,"该机器没有注册"}
+	}
+
 }
 
-func Start(ip, container_name string) string {
+func Del(ip, container_id string) Resp {
 	var port int
 	for _, ai := range AgentPool {
 		if ai.IP == ip {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + start
-	fmt.Println(url)
-	req := httplib.Get(url)
-	req.Param("container_name", container_name)
-	str, _ := req.String()
-	logs.Info(str)
-	return str
+	if port != 0 {
+		url := "http://" + ip + ":" + strconv.Itoa(port) + del
+		fmt.Println(url)
+		req := httplib.Get(url)
+		req.Param("container_id", container_id)
+		str, _ := req.String()
+		logs.Info(str)
+		return genResp(str)
+	} else {
+		return Resp{404,"该机器没有注册"}
+	}
+
 }
 
-func Stop(ip, container_name string) string {
+func Start(ip, container_id string) Resp {
 	var port int
 	for _, ai := range AgentPool {
 		if ai.IP == ip {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + stop
-	fmt.Println(url)
-	req := httplib.Get(url)
-	req.Param("container_name", container_name)
-	str, _ := req.String()
-	logs.Info(str)
-	return str
+	if port != 0 {
+		url := "http://" + ip + ":" + strconv.Itoa(port) + start
+		fmt.Println(url)
+		req := httplib.Get(url)
+		req.Param("container_id", container_id)
+		str, _ := req.String()
+		logs.Info(str)
+		return genResp(str)
+	} else {
+		return Resp{404,"该机器没有注册"}
+	}
+
+}
+
+func Stop(ip, container_id string) Resp {
+	var port int
+	for _, ai := range AgentPool {
+		if ai.IP == ip {
+			port = ai.Port
+		}
+	}
+	if port != 0 {
+		url := "http://" + ip + ":" + strconv.Itoa(port) + stop
+		fmt.Println(url)
+		req := httplib.Get(url)
+		req.Param("container_id", container_id)
+		str, _ := req.String()
+		logs.Info(str)
+		return genResp(str)
+	} else {
+		return Resp{404,"该机器没有注册"}
+	}
+
+}
+
+type Container struct {
+	ContainerName   string
+	ContainerID     string
+	Image           string
+	ContainerStatus string
+}
+
+func genResp2(abc string) []Container {
+	var resp []Container
+	if err := json.Unmarshal([]byte(abc), &resp); err != nil {
+		fmt.Println(err.Error())
+	}
+	//fmt.Println(resp)
+	return resp
+}
+func GetAll(ip string) []Container {
+	var port int
+	for _, ai := range AgentPool {
+		if ai.IP == ip {
+			port = ai.Port
+		}
+	}
+	if port != 0 {
+		url := "http://" + ip + ":" + strconv.Itoa(port) + getall
+		fmt.Println(url)
+		req := httplib.Get(url)
+		str, _ := req.String()
+		logs.Info(str)
+		return genResp2(str)
+	} else {
+		return []Container{}
+	}
+
 }

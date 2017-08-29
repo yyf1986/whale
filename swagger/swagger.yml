@@ -24,12 +24,12 @@ paths:
         required: true
         type: string
       - in: query
-        name: cont_name
+        name: container_name
         description: 容器名称
         required: true
         type: string
       - in: query
-        name: cont_image
+        name: image_name
         description: 容器的image
         required: true
         type: string
@@ -56,8 +56,25 @@ paths:
         required: true
         type: string
       - in: query
-        name: cont_name
-        description: 容器名称
+        name: container_id
+        description: 容器id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"status": 200}'
+        "403":
+          description: body is empty
+  /container/getall:
+    get:
+      tags:
+      - container
+      description: get all container
+      operationId: ContainerController.get all container
+      parameters:
+      - in: query
+        name: vm_ip
+        description: 宿主机地址
         required: true
         type: string
       responses:
@@ -78,8 +95,8 @@ paths:
         required: true
         type: string
       - in: query
-        name: cont_name
-        description: 容器名称
+        name: container_id
+        description: 容器id
         required: true
         type: string
       responses:
@@ -100,8 +117,8 @@ paths:
         required: true
         type: string
       - in: query
-        name: cont_name
-        description: 容器名称
+        name: container_id
+        description: 容器id
         required: true
         type: string
       responses:

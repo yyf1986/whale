@@ -21,7 +21,8 @@ type AgentInfo struct {
 var AgentPool []*AgentInfo
 
 var l sync.Mutex
-
+//如果是新增的话，直接增加
+//如果是已有的，则更新信息
 func SetInfo(aa AgentInfo) {
 	l.Lock()
 	//time.Sleep(10 * time.Second)
@@ -73,9 +74,7 @@ func checkPort(ip string, port int) bool {
 		IP:   net.ParseIP(ip),
 		Port: port,
 	}
-
 	conn, err := net.DialTCP("tcp", nil, &tcpAddr)
-
 	if err == nil {
 		conn.Close()
 		return true
@@ -87,7 +86,7 @@ func checkPort(ip string, port int) bool {
 
 //端口不能访问，会把此agent从资源池中剔除，60s更新一次
 func updateInfo() {
-	logs.Info("start to update agent info")
+	logs.Info("Task start to update agent info")
 	l.Lock()
 	isok := true
 	var agentinfos []*AgentInfo
@@ -104,10 +103,10 @@ func updateInfo() {
 			}
 		}
 		AgentPool = agentinfos
-		logs.Info("end to update agent info")
+		logs.Info("Task end to update agent info")
 		l.Unlock()
 	} else {
-		logs.Info("agent info do not need to update")
+		logs.Info("Task agent info do not need to update")
 		l.Unlock()
 	}
 

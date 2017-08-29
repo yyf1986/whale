@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
@@ -14,19 +15,35 @@ var (
 	delallports = "/v1/res/delallports"
 )
 
-func CreatePort(ip string) string {
+type Port struct {
+	Port int `json:"port"`
+}
+
+func genPort(abc string) Port {
+	var resp Port
+	if err := json.Unmarshal([]byte(abc), &resp); err != nil {
+		fmt.Println(err.Error())
+	}
+	return resp
+}
+func CreatePort(ip string) Port {
 	var port int
 	for _, ai := range AgentPool {
 		if ai.IP == ip {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + getport
-	fmt.Println(url)
-	req := httplib.Get(url)
-	str, _ := req.String()
-	logs.Info(str)
-	return str
+	if port != 0 {
+		url := "http://" + ip + ":" + strconv.Itoa(port) + getport
+		fmt.Println(url)
+		req := httplib.Get(url)
+		str, _ := req.String()
+		logs.Info(str)
+		return genPort(str)
+	} else {
+		return Port{0}
+	}
+
 }
 
 func DelPort(ip, p string) string {
@@ -36,13 +53,18 @@ func DelPort(ip, p string) string {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + delport
-	fmt.Println(url)
-	req := httplib.Get(url)
-	req.Param("port", p)
-	str, _ := req.String()
-	logs.Info(str)
-	return str
+	if port != 0 {
+		url := "http://" + ip + ":" + strconv.Itoa(port) + delport
+		fmt.Println(url)
+		req := httplib.Get(url)
+		req.Param("port", p)
+		str, _ := req.String()
+		logs.Info(str)
+		return str
+	} else {
+		return `{"status":404,"errinfo":该机器没有注册"}`
+	}
+
 }
 
 func GetAllPorts(ip string) string {
@@ -52,12 +74,17 @@ func GetAllPorts(ip string) string {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + getallports
-	fmt.Println(url)
-	req := httplib.Get(url)
-	str, _ := req.String()
-	logs.Info(str)
-	return str
+	if port != 0 {
+		url := "http://" + ip + ":" + strconv.Itoa(port) + getallports
+		fmt.Println(url)
+		req := httplib.Get(url)
+		str, _ := req.String()
+		logs.Info(str)
+		return str
+	} else {
+		return `{"status":404,"errinfo":该机器没有注册"}`
+	}
+
 }
 
 func DelAllPorts(ip string) string {
@@ -67,10 +94,15 @@ func DelAllPorts(ip string) string {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + delallports
-	fmt.Println(url)
-	req := httplib.Get(url)
-	str, _ := req.String()
-	logs.Info(str)
-	return str
+	if port != 0 {
+		url := "http://" + ip + ":" + strconv.Itoa(port) + delallports
+		fmt.Println(url)
+		req := httplib.Get(url)
+		str, _ := req.String()
+		logs.Info(str)
+		return str
+	} else {
+		return `{"status":404,"errinfo":该机器没有注册"}`
+	}
+
 }
