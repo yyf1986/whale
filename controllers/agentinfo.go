@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"whale/models"
 	"encoding/json"
 	"github.com/astaxie/beego"
+	"whale/models"
 )
 
 // Operations about AgentInfo

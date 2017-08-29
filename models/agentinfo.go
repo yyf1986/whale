@@ -2,19 +2,19 @@ package models
 
 import (
 	//"fmt"
-	"sync"
-	"net"
-	"github.com/astaxie/beego/toolbox"
 	"github.com/astaxie/beego/logs"
+	"github.com/astaxie/beego/toolbox"
+	"net"
+	"sync"
 )
 
 type AgentInfo struct {
-	IP string
-	Port int
-	TotalCpu int
-	TotalMem int
-	AverCpu int
-	AverMem int
+	IP           string
+	Port         int
+	TotalCpu     int
+	TotalMem     int
+	AverCpu      int
+	AverMem      int
 	DockerStatus string
 }
 
@@ -27,7 +27,7 @@ func SetInfo(aa AgentInfo) {
 	//time.Sleep(10 * time.Second)
 	isNew := true
 	logs.Info(aa.IP + " start to reg")
-	for _, ai := range AgentPool {                                
+	for _, ai := range AgentPool {
 		if ai.IP == aa.IP {
 			isNew = false
 		}
@@ -51,11 +51,11 @@ func SetInfo(aa AgentInfo) {
 	l.Unlock()
 }
 
-func GetInfo() []*AgentInfo{
+func GetInfo() []*AgentInfo {
 	return AgentPool
 }
 
-func GetInfo4Web() []*AgentInfo{
+func GetInfo4Web() []*AgentInfo {
 	var webagentinfos []*AgentInfo
 	l.Lock()
 	for _, ap := range AgentPool {
@@ -66,20 +66,21 @@ func GetInfo4Web() []*AgentInfo{
 	l.Unlock()
 	return webagentinfos
 }
+
 //检查端口
-func checkPort(ip string, port int) bool{
+func checkPort(ip string, port int) bool {
 	tcpAddr := net.TCPAddr{
-        IP:   net.ParseIP(ip),
-        Port: port,
-    }
+		IP:   net.ParseIP(ip),
+		Port: port,
+	}
 
-    conn, err := net.DialTCP("tcp", nil, &tcpAddr)
+	conn, err := net.DialTCP("tcp", nil, &tcpAddr)
 
-    if err == nil {
+	if err == nil {
 		conn.Close()
 		return true
 
-    } else {
+	} else {
 		return false
 	}
 }
@@ -91,15 +92,15 @@ func updateInfo() {
 	isok := true
 	var agentinfos []*AgentInfo
 	for _, ai := range AgentPool {
-		if ! checkPort(ai.IP,ai.Port) {
+		if !checkPort(ai.IP, ai.Port) {
 			isok = false
 			break
 		}
 	}
-	if ! isok {
+	if !isok {
 		for _, ai := range AgentPool {
-			if checkPort(ai.IP,ai.Port) {
-				agentinfos = append(agentinfos,ai)
+			if checkPort(ai.IP, ai.Port) {
+				agentinfos = append(agentinfos, ai)
 			}
 		}
 		AgentPool = agentinfos
@@ -109,7 +110,7 @@ func updateInfo() {
 		logs.Info("agent info do not need to update")
 		l.Unlock()
 	}
-	
+
 }
 
 func addTask4Update() {
@@ -117,7 +118,6 @@ func addTask4Update() {
 	tk := toolbox.NewTask("updateInfo", "0 */1 * * * *", f)
 	toolbox.AddTask("updateInfo", tk)
 }
-
 
 func init() {
 	addTask4Update()

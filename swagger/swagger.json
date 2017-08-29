@@ -218,6 +218,117 @@
                     }
                 }
             }
+        },
+        "/res/createport": {
+            "get": {
+                "tags": [
+                    "res"
+                ],
+                "description": "get port",
+                "operationId": "ResController.get port",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "vm_ip",
+                        "description": "宿主机地址",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"port\": 200}"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/res/delallports": {
+            "get": {
+                "tags": [
+                    "res"
+                ],
+                "description": "del all ports",
+                "operationId": "ResController.del all ports",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "vm_ip",
+                        "description": "宿主机地址",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"port\": 200}"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/res/delport": {
+            "get": {
+                "tags": [
+                    "res"
+                ],
+                "description": "del port",
+                "operationId": "ResController.del port",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "vm_ip",
+                        "description": "宿主机地址",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "port",
+                        "description": "宿主机端口",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"port\": 200}"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/res/getallports": {
+            "get": {
+                "tags": [
+                    "res"
+                ],
+                "description": "get all ports",
+                "operationId": "ResController.get all ports",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "vm_ip",
+                        "description": "宿主机地址",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"port\": 200}"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -262,6 +373,10 @@
         {
             "name": "container",
             "description": "Operations about Container\n"
+        },
+        {
+            "name": "res",
+            "description": "Operations about resource\n"
         }
     ]
 }

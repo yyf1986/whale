@@ -25,6 +25,11 @@ func init() {
 				&controllers.ContainerController{},
 			),
 		),
+		beego.NSNamespace("/res",
+			beego.NSInclude(
+				&controllers.ResController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

@@ -8,74 +8,68 @@ import (
 )
 
 var (
-	create = "/v1/container/create"
-	del    = "/v1/container/del"
-	stop   = "/v1/container/stop"
-	start  = "/v1/container/start"
-	get    = "/v1/container/getall"
+	getport     = "/v1/res/createport"
+	delport     = "/v1/res/delport"
+	getallports = "/v1/res/getallports"
+	delallports = "/v1/res/delallports"
 )
 
-func Create(ip, container_name, image_name, env string) string {
+func CreatePort(ip string) string {
 	var port int
 	for _, ai := range AgentPool {
 		if ai.IP == ip {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + create
+	url := "http://" + ip + ":" + strconv.Itoa(port) + getport
 	fmt.Println(url)
 	req := httplib.Get(url)
-	req.Param("container_name", container_name)
-	req.Param("image_name", image_name)
-	req.Param("env", env)
 	str, _ := req.String()
 	logs.Info(str)
 	return str
 }
 
-func Del(ip, container_name string) string {
+func DelPort(ip, p string) string {
 	var port int
 	for _, ai := range AgentPool {
 		if ai.IP == ip {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + del
+	url := "http://" + ip + ":" + strconv.Itoa(port) + delport
 	fmt.Println(url)
 	req := httplib.Get(url)
-	req.Param("container_name", container_name)
+	req.Param("port", p)
 	str, _ := req.String()
 	logs.Info(str)
 	return str
 }
 
-func Start(ip, container_name string) string {
+func GetAllPorts(ip string) string {
 	var port int
 	for _, ai := range AgentPool {
 		if ai.IP == ip {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + start
+	url := "http://" + ip + ":" + strconv.Itoa(port) + getallports
 	fmt.Println(url)
 	req := httplib.Get(url)
-	req.Param("container_name", container_name)
 	str, _ := req.String()
 	logs.Info(str)
 	return str
 }
 
-func Stop(ip, container_name string) string {
+func DelAllPorts(ip string) string {
 	var port int
 	for _, ai := range AgentPool {
 		if ai.IP == ip {
 			port = ai.Port
 		}
 	}
-	url := "http://" + ip + ":" + strconv.Itoa(port) + stop
+	url := "http://" + ip + ":" + strconv.Itoa(port) + delallports
 	fmt.Println(url)
 	req := httplib.Get(url)
-	req.Param("container_name", container_name)
 	str, _ := req.String()
 	logs.Info(str)
 	return str
