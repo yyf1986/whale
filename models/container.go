@@ -29,13 +29,9 @@ func genResp(abc string) Resp {
 	//fmt.Println(resp)
 	return resp
 }
+
 func Create(ip, container_name, image_name, env string) Resp {
-	var port int
-	for _, ai := range AgentPool {
-		if ai.IP == ip {
-			port = ai.Port
-		}
-	}
+	port := checkIp(ip)
 	if port != 0 {
 		url := "http://" + ip + ":" + strconv.Itoa(port) + create
 		fmt.Println(url)
@@ -49,16 +45,10 @@ func Create(ip, container_name, image_name, env string) Resp {
 	} else {
 		return Resp{404,"该机器没有注册"}
 	}
-
 }
 
 func Del(ip, container_id string) Resp {
-	var port int
-	for _, ai := range AgentPool {
-		if ai.IP == ip {
-			port = ai.Port
-		}
-	}
+	port := checkIp(ip)
 	if port != 0 {
 		url := "http://" + ip + ":" + strconv.Itoa(port) + del
 		fmt.Println(url)
@@ -70,16 +60,10 @@ func Del(ip, container_id string) Resp {
 	} else {
 		return Resp{404,"该机器没有注册"}
 	}
-
 }
 
 func Start(ip, container_id string) Resp {
-	var port int
-	for _, ai := range AgentPool {
-		if ai.IP == ip {
-			port = ai.Port
-		}
-	}
+	port := checkIp(ip)
 	if port != 0 {
 		url := "http://" + ip + ":" + strconv.Itoa(port) + start
 		fmt.Println(url)
@@ -91,16 +75,10 @@ func Start(ip, container_id string) Resp {
 	} else {
 		return Resp{404,"该机器没有注册"}
 	}
-
 }
 
 func Stop(ip, container_id string) Resp {
-	var port int
-	for _, ai := range AgentPool {
-		if ai.IP == ip {
-			port = ai.Port
-		}
-	}
+	port := checkIp(ip)
 	if port != 0 {
 		url := "http://" + ip + ":" + strconv.Itoa(port) + stop
 		fmt.Println(url)
@@ -130,13 +108,9 @@ func genResp2(abc string) []Container {
 	//fmt.Println(resp)
 	return resp
 }
+//返回所有容器信息
 func GetAll(ip string) []Container {
-	var port int
-	for _, ai := range AgentPool {
-		if ai.IP == ip {
-			port = ai.Port
-		}
-	}
+	port := checkIp(ip)
 	if port != 0 {
 		url := "http://" + ip + ":" + strconv.Itoa(port) + getall
 		fmt.Println(url)
@@ -147,5 +121,4 @@ func GetAll(ip string) []Container {
 	} else {
 		return []Container{}
 	}
-
 }

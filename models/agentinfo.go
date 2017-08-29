@@ -68,7 +68,7 @@ func GetInfo4Web() []*AgentInfo {
 	return webagentinfos
 }
 
-//检查端口
+//通过注册的IP和端口查看服务是否可用
 func checkPort(ip string, port int) bool {
 	tcpAddr := net.TCPAddr{
 		IP:   net.ParseIP(ip),
