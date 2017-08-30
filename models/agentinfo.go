@@ -109,7 +109,6 @@ func updateInfo() {
 		logs.Info("Task agent info do not need to update")
 		l.Unlock()
 	}
-
 }
 
 func addTask4Update() {
