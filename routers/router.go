@@ -25,6 +25,11 @@ func init() {
 				&controllers.ContainerController{},
 			),
 		),
+		beego.NSNamespace("/image",
+			beego.NSInclude(
+				&controllers.ImageController{},
+			),
+		),
 		beego.NSNamespace("/res",
 			beego.NSInclude(
 				&controllers.ResController{},

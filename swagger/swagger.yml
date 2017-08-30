@@ -126,6 +126,23 @@ paths:
           description: '{"status": 200}'
         "403":
           description: body is empty
+  /image/getall:
+    get:
+      tags:
+      - image
+      description: get all container
+      operationId: ImageController.get all container
+      parameters:
+      - in: query
+        name: vm_ip
+        description: 宿主机地址
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"status": 200}'
+        "403":
+          description: body is empty
   /reg/:
     get:
       tags:
@@ -267,6 +284,9 @@ tags:
 - name: container
   description: |
     Operations about Container
+- name: image
+  description: |
+    Operations about Image
 - name: res
   description: |
     Operations about resource
