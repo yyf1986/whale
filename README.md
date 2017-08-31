@@ -11,6 +11,12 @@ GO15VENDOREXPERIMENT=1 go build
 git clone https://github.com/yyf1986/whale.git
 cd whale
 GO15VENDOREXPERIMENT=1 go build
+build完后，将生成的whale文件和swagger目录，一起拷贝到需要运行的机器上
+```
+# run
+```
+./whale-agent -ip 10.11.20.111 -p 12345 -whaleserver 10.11.20.112:12346
+./whale -p 12346 (default port is 12346)
 ```
 # whale v1
 
