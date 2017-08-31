@@ -1,5 +1,5 @@
 #### 为了快速搭建环境，简化操作
-# install
+# install(需要go环境)
 - agent
 ```
 git clone https://github.com/yyf1986/whale-agent.git
@@ -13,7 +13,9 @@ cd whale
 GO15VENDOREXPERIMENT=1 go build
 build完后，将生成的whale文件和swagger目录，一起拷贝到需要运行的机器上
 ```
-# run
+# run 
+[whale-agent](https://github.com/yyf1986/yyf1986.github.io/blob/master/attachment/whale-agent)
+[whale](https://github.com/yyf1986/yyf1986.github.io/blob/master/attachment/whale.tar.gz)
 ```
 ./whale-agent -ip 10.11.20.111 -p 12345 -whaleserver 10.11.20.112:12346
 ./whale -p 12346 (default port is 12346)
