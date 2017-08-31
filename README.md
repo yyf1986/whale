@@ -1,4 +1,17 @@
 #### 为了快速搭建环境，简化操作
+# install
+- agent
+```
+git clone https://github.com/yyf1986/whale-agent.git
+cd whale-agent
+GO15VENDOREXPERIMENT=1 go build
+```
+- server
+```
+git clone https://github.com/yyf1986/whale.git
+cd whale
+GO15VENDOREXPERIMENT=1 go build
+```
 # whale v1
 
 - agent
