@@ -21,6 +21,7 @@ build完后，将生成的whale文件和swagger目录，一起拷贝到需要运
 ./whale-agent -ip 10.11.20.111 -p 12345 -whaleserver 10.11.20.112:12346
 ./whale -p 12346 (default port is 12346)
 ```
+> http://whaleserver:port/swagger,可以查看提供哪些api
 # whale v1
 
 - agent
