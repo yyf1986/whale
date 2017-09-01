@@ -25,7 +25,8 @@ build完后，将生成的whale文件和swagger目录，一起拷贝到需要运
 ./demo
 ```
 > http://whaleserver:port/swagger,可以查看提供哪些api
-> http://demoip:port/container/list，可以查看所有注册到api上的宿主机上的容器
+
+> http://demoip:port/container/list，可以查看所有注册到api上的宿主机上的容器，注意修改whale-web目录中配置文件中的端口号
 # whale v1
 
 - agent
