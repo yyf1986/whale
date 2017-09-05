@@ -31,9 +31,9 @@ func genResp(abc string) Resp {
 }
 
 func Create(ip, container_name, image_name, env string) Resp {
-	port := checkIp(ip)
+	port, urlpath := checkIp(ip, "CreateContainer")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + create
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		req.Param("container_name", container_name)
@@ -43,14 +43,14 @@ func Create(ip, container_name, image_name, env string) Resp {
 		logs.Info(str)
 		return genResp(str)
 	} else {
-		return Resp{404,"该机器没有注册"}
+		return Resp{404, "该机器没有注册"}
 	}
 }
 
 func Del(ip, container_id string) Resp {
-	port := checkIp(ip)
+	port, urlpath := checkIp(ip, "DelContainer")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + del
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		req.Param("container_id", container_id)
@@ -58,14 +58,14 @@ func Del(ip, container_id string) Resp {
 		logs.Info(str)
 		return genResp(str)
 	} else {
-		return Resp{404,"该机器没有注册"}
+		return Resp{404, "该机器没有注册"}
 	}
 }
 
 func Start(ip, container_id string) Resp {
-	port := checkIp(ip)
+	port, urlpath := checkIp(ip, "StartContainer")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + start
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		req.Param("container_id", container_id)
@@ -73,14 +73,14 @@ func Start(ip, container_id string) Resp {
 		logs.Info(str)
 		return genResp(str)
 	} else {
-		return Resp{404,"该机器没有注册"}
+		return Resp{404, "该机器没有注册"}
 	}
 }
 
 func Stop(ip, container_id string) Resp {
-	port := checkIp(ip)
+	port, urlpath := checkIp(ip, "StopContainer")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + stop
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		req.Param("container_id", container_id)
@@ -88,7 +88,7 @@ func Stop(ip, container_id string) Resp {
 		logs.Info(str)
 		return genResp(str)
 	} else {
-		return Resp{404,"该机器没有注册"}
+		return Resp{404, "该机器没有注册"}
 	}
 
 }
@@ -108,11 +108,12 @@ func genResp2(abc string) []Container {
 	//fmt.Println(resp)
 	return resp
 }
+
 //返回所有容器信息
 func GetAll(ip string) []Container {
-	port := checkIp(ip)
+	port, urlpath := checkIp(ip, "GetAllContainers")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + getall
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		str, _ := req.String()

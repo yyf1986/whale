@@ -277,6 +277,9 @@ definitions:
       TotalMem:
         type: integer
         format: int64
+      Url:
+        additionalProperties:
+          type: string
 tags:
 - name: reg
   description: |

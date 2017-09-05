@@ -26,21 +26,24 @@ func genPort(abc string) Port {
 	}
 	return resp
 }
+
 //根据ip地址查询是否在注册列表中，有返回对应的端口号，没有返回0
-func checkIp(ip string) int {
+func checkIp(ip, do string) (int,string) {
 	var port int
+	var url string
 	for _, ai := range AgentPool {
 		if ai.IP == ip {
 			port = ai.Port
+			url = ai.Url[do]
 		}
 	}
-	return port
+	return port,url
 }
- 
+
 func CreatePort(ip string) Port {
-	port := checkIp(ip)
+	port,urlpath := checkIp(ip,"CreatePort")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + getport
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		str, _ := req.String()
@@ -52,9 +55,9 @@ func CreatePort(ip string) Port {
 }
 
 func DelPort(ip, p string) string {
-	port := checkIp(ip)
+	port,urlpath := checkIp(ip,"DelPort")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + delport
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		req.Param("port", p)
@@ -68,9 +71,9 @@ func DelPort(ip, p string) string {
 }
 
 func GetAllPorts(ip string) string {
-	port := checkIp(ip)
+	port,urlpath := checkIp(ip,"GetAllPorts")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + getallports
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		str, _ := req.String()
@@ -83,9 +86,9 @@ func GetAllPorts(ip string) string {
 }
 
 func DelAllPorts(ip string) string {
-	port := checkIp(ip)
+	port,urlpath := checkIp(ip,"DelAllPorts")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + delallports
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		str, _ := req.String()
@@ -94,5 +97,4 @@ func DelAllPorts(ip string) string {
 	} else {
 		return `{"status":404,"errinfo":该机器没有注册"}`
 	}
-
 }

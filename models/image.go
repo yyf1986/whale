@@ -1,11 +1,11 @@
 package models
 
 import (
-	"strconv"
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
-	"encoding/json"
+	"strconv"
 )
 
 var (
@@ -22,9 +22,9 @@ func genImage(abc string) []string {
 }
 
 func GetImages(ip string) []string {
-	port := checkIp(ip)
+	port,urlpath := checkIp(ip,"GetImages")
 	if port != 0 {
-		url := "http://" + ip + ":" + strconv.Itoa(port) + getimages
+		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
 		req := httplib.Get(url)
 		str, _ := req.String()

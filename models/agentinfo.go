@@ -16,11 +16,13 @@ type AgentInfo struct {
 	AverCpu      int
 	AverMem      int
 	DockerStatus string
+	Url          map[string]string
 }
 
 var AgentPool []*AgentInfo
 
 var l sync.Mutex
+
 //如果是新增的话，直接增加
 //如果是已有的，则更新信息
 func SetInfo(aa AgentInfo) {
