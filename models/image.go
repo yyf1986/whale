@@ -22,7 +22,7 @@ func genImage(abc string) []string {
 }
 
 func GetImages(ip string) []string {
-	port,urlpath := checkIp(ip,"GetImages")
+	port, urlpath := checkIp(ip, "GetImages")
 	if port != 0 {
 		url := "http://" + ip + ":" + strconv.Itoa(port) + urlpath
 		fmt.Println(url)
