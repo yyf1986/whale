@@ -40,6 +40,8 @@ func (u *AgentInfoController) GetAll() {
 // @Success 200 {object} models.AgentInfo
 // @router /get4web [get]
 func (u *AgentInfoController) Get4Web() {
+	u.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	u.Ctx.Output.Header("Access-Control-Allow-Methods", "GET,POST")
 	agentinfos := models.GetInfo4Web()
 	u.Data["json"] = agentinfos
 	u.ServeJSON()

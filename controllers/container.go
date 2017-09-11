@@ -21,6 +21,8 @@ type ContainerController struct {
 // @Failure 403 body is empty
 // @router /create [get]
 func (c *ContainerController) CreateContainer() {
+	c.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	c.Ctx.Output.Header("Access-Control-Allow-Methods", "GET,POST")
 	cont_name := c.GetString("container_name")
 	vm_ip := c.GetString("vm_ip")
 	cont_image := c.GetString("image_name")
@@ -37,6 +39,8 @@ func (c *ContainerController) CreateContainer() {
 // @Failure 403 body is empty
 // @router /del [get]
 func (c *ContainerController) DelContainer() {
+	c.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	c.Ctx.Output.Header("Access-Control-Allow-Methods", "GET,POST")
 	container_id := c.GetString("container_id")
 	vm_ip := c.GetString("vm_ip")
 	c.Data["json"] = models.Del(vm_ip, container_id)
@@ -51,6 +55,8 @@ func (c *ContainerController) DelContainer() {
 // @Failure 403 body is empty
 // @router /start [get]
 func (c *ContainerController) StartContainer() {
+	c.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	c.Ctx.Output.Header("Access-Control-Allow-Methods", "GET,POST")
 	container_id := c.GetString("container_id")
 	vm_ip := c.GetString("vm_ip")
 	c.Data["json"] = models.Start(vm_ip, container_id)
@@ -65,6 +71,8 @@ func (c *ContainerController) StartContainer() {
 // @Failure 403 body is empty
 // @router /stop [get]
 func (c *ContainerController) StopContainer() {
+	c.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	c.Ctx.Output.Header("Access-Control-Allow-Methods", "GET,POST")
 	container_id := c.GetString("container_id")
 	vm_ip := c.GetString("vm_ip")
 	c.Data["json"] = models.Stop(vm_ip, container_id)
@@ -78,6 +86,8 @@ func (c *ContainerController) StopContainer() {
 // @Failure 403 body is empty
 // @router /getall [get]
 func (c *ContainerController) GetAllContainer() {
+	c.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	c.Ctx.Output.Header("Access-Control-Allow-Methods", "GET,POST")
 	vm_ip := c.GetString("vm_ip")
 	c.Data["json"] = models.GetAll(vm_ip)
 	c.ServeJSON()

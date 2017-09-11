@@ -18,6 +18,8 @@ type ImageController struct {
 // @Failure 403 body is empty
 // @router /getall [get]
 func (c *ImageController) GetAllImage() {
+	c.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	c.Ctx.Output.Header("Access-Control-Allow-Methods", "GET,POST")
 	vm_ip := c.GetString("vm_ip")
 	c.Data["json"] = models.GetImages(vm_ip)
 	c.ServeJSON()
